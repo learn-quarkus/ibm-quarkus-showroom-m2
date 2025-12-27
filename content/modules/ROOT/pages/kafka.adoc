@@ -213,7 +213,7 @@ source.onmessage = function (event) { // <2>
 
 We need to configure the Kafka connector. This is done in the `application.properties` file (in the `src/main/resources` directory). The keys are structured as follows:
 
-`mp.messaging.[outgoing|incoming].{channel-name}.property=value`
+`mp.messaging.[outgoing|incoming].\{channel-name\}.property=value`
 
 The `channel-name` segment must match the value set in the `@Incoming` and `@Outgoing` annotation:
 

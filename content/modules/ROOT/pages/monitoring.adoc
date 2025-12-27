@@ -339,7 +339,7 @@ You will see the landing page of Grafana as shown:
 
 image::grafana-webui.png[Grafana, 700]
 
-==== 10. Add a data source to Grafana
+=== 10. Add a data source to Grafana
 
 Select Add data source and select *Prometheus* as data source type.
 

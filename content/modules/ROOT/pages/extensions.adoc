@@ -249,7 +249,7 @@ This will also listen for a debugger on port `5005`. If you want to wait for the
 
 If you are only doing the *Advanced* lab today, or you didn’t quite complete the Basic Lab, you'll need to login to OpenShift, then build and deploy the application needed for the exercises using a utility script provided. Follow the steps below to do this.
 
-==== Login to OpenShift
+=== Login to OpenShift
 
 Although your VS Code is running on the Kubernetes cluster, it's running with a default restricted _Service Account_ that prevents you from creating most resource types. So we'll log in with your workshop user. Execute the following command in the VS Code terminal:
 

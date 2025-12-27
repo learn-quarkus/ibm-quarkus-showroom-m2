@@ -62,8 +62,8 @@ Next, create two new endpoints in the same class which creates new people in our
     @POST
     @Path("/{name}")
     public Uni<Person> addPerson(String name) {
-          return bus.<Person>request("add-person", name)
-                .onItem().transform(response -> response.body());
+          return bus.<Person>request("add-person", name) <1>
+                .onItem().transform(response -> response.body()); <2>
     }
 
     @GET
