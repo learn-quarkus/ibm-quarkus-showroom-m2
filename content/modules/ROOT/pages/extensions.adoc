@@ -2,110 +2,11 @@
 :experimental:
 :imagesdir: images
 
-Quarkus is a Kubernetes Native Java stack tailored for GraalVM & OpenJDK HotSpot, crafted from the best of breed Java libraries and standards. Amazingly fast boot time, incredibly low RSS memory (not just heap size!) offering near instant scale up and high density memory utilization in container orchestration platforms like Kubernetes. Quarkus uses a technique called https://quarkus.io/vision/container-first[compile time boot^] and offers a unified imperative and reactive programming model and a number of other developer features like Live Reload to bring _real joy_ to your development.
-
-*Red Hat* offers the fully supported https://access.redhat.com/products/quarkus[Red Hat Build of Quarkus(RHBQ)^] with support and maintenance of Quarkus. In this workhop, you will use Quarkus to develop Kubernetes-native microservices and deploy them to OpenShift. Quarkus is one of the runtimes included in https://www.redhat.com/en/products/runtimes[Red Hat Runtimes^]. https://access.redhat.com/documentation/en-us/red_hat_build_of_quarkus[Learn more about RHBQ^].
-
-Throughout this lab you'll discover how Quarkus can make your development of cloud native apps faster and more productive.
-
-== If you've already completed the Quarkus Basic Hands-on Lab Today
-
-*If you have completed the Basic lab today*, you can scroll/skip down to the **List Extensions** exercise to continue your Quarkus lab. If not, then continue below:
-
-== First Step: Set Your Username!
-
-Look in the box at the top of your screen. Is your username set already? If so it will look like this:
-
-image::alreadyset.png[Set User ID above, 700]
-
-If your username is properly set, then you can move on. **If not, in the above box, enter the user ID you were assigned** like this:
-
-image::setuser.png[Set User ID above, 700]
-
-This will customize the links and copy/paste code for this workshop. If you accidently type the wrong username, just select the green recycle icon to reset it.
-
-== Select-to-Copy
-
-You will see various code and command blocks throughout these exercises which can be copy/pasted directly by selecting anywhere on the block of text:
-
-[source,java,role="copypaste"]
-----
-/* A sample Java snippet that you can copy/paste by selecting */
-public class CopyMeDirectly {
-    public static void main(String[] args) {
-        System.out.println("You can copy this whole class with a select!");
-    }
-}
-----
-
-Simply select once and the whole block is copied to your clipboard, ready to be pasted with kbd:[CTRL+V] (or kbd:[Command+V] on Mac OS).
-
-There are also Linux shell commands that can also be copied and pasted into a Terminal in your Development Environment:
-
-[source,sh,role="copypaste"]
-----
-echo "This is a bash shell command that you can copy/paste by selecting"
-----
-
-## Access Your Development Environment
-
-You will be using VS Code server based on https://developers.redhat.com/products/openshift-dev-spaces/overview[Red Hat OpenShift Dev Spaces^] **Changes to files are auto-saved every few seconds**, so you don't need to explicitly save changes.
-
-To get started, https://devspaces.{{ ROUTE_SUBDOMAIN }}#https://github.com/learn-quarkus/[access the Red Hat OpenShift Dev Spaces instance^] and select *Log in with OpenShift* button:
-
-image::login_with_openshift.png[login,800]
-
-Type in the following credentail:
-
-* *Username*: `{{ USER_ID }}`
-* *Password*: `{{ DS_USER_PASSWORD }}`
-
-image::che-login.png[login,800]
-
-[NOTE]
-====
-In case you see the *Authorize Access* page as below, select *Allow selected permissions* button.
-
-image::auth-access.png[auth-access, 800]
-====
-
-The next page will show the progess as devspaces is *Starting workspace quarkus-workshop*. It takes about *60* seconds to finish the process.
-
-image::starting-workspace.png[ds, 800]
-
-[NOTE]
-====
-If you see this *Do you trust the authors of this repository?* popup, select `Do not ask again for other repositories` to continue using your workspace.
-
-image::trust-author.png[ds, 800]
-
-In case you see this information page, select `Start your workspace` to continue  using your workspace.
-
-image::starting-workspace-info.png[ds, 800]
-====
-
-After a few seconds, you’ll be placed in the workspace.
-
-image::ds-workspace.png[ds, 800]
-
-[NOTE]
-====
-In case you see this information page, click on `Trust Publishers & Install`.
-
-image::ds-trust-pub-popup.png[ds, 800]
-
-In case you see this infomation page, check on `Trust the authors of all files in the parent folder 'projects'`. Then, select `Yes, I trust the authors.
-
-image::ds-trust-popup.png[ds, 800]
-====
-
-You'll use all of these during the course of this workshop, so keep this browser tab open throughout. **If things get weird, you can simply reload the browser tab to refresh the view.**
-
 ## Explore Project
 
 Let's take a look at the left *Explorer*. Your Quarkus project was already imported when the workspace was created. 
 
-When you select the `pom.xml`, you will see which version fo the Red Hat Build of Quarkus you will use for the workshop today.
+When you select the `pom.xml`, you will see which version of the IBM Enterprise Build of Quarkus you will use for the workshop today.
 
 [source, xml]
 ----
@@ -116,9 +17,9 @@ When you select the `pom.xml`, you will see which version fo the Red Hat Build o
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>com.redhat.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.20.1.redhat-00003</quarkus.platform.version>
+        <quarkus.platform.version>3.27.1.redhat-00003</quarkus.platform.version>
         <skipITs>true</skipITs>
-        <surefire-plugin.version>3.5.2</surefire-plugin.version>
+        <surefire-plugin.version>3.5.3</surefire-plugin.version>
     </properties>
 ----
 
@@ -162,7 +63,7 @@ Before starting the dev mode, you need to *append* the following configuration t
 
 [source, properties,role="copypaste",subs="attributes"]
 ----
-%dev.quarkus.dev-ui.hosts={{ USER_ID }}-quarkus-workshop-index-webpage.{{ ROUTE_SUBDOMAIN }}
+%dev.quarkus.dev-ui.hosts={USER_ID}-quarkus-workshop-index-webpage.{ROUTE_SUBDOMAIN}
 ----
 
 Note that the changes will be automatially saved in the IDE.
@@ -245,17 +146,13 @@ Wow, how cool is that? Supersonic Subatomic live reload! Go ahead and change it 
 This will also listen for a debugger on port `5005`. If you want to wait for the debugger to attach before running you can pass `-Ddebug` on the command line. If you don’t want the debugger at all you can use `-Ddebug=false`. We'll use this later.
 ====
 
-== In case you haven’t done Module 1 (Basic) today
-
-If you are only doing the *Advanced* lab today, or you didn’t quite complete the Basic Lab, you'll need to login to OpenShift, then build and deploy the application needed for the exercises using a utility script provided. Follow the steps below to do this.
-
 === Login to OpenShift
 
 Although your VS Code is running on the Kubernetes cluster, it's running with a default restricted _Service Account_ that prevents you from creating most resource types. So we'll log in with your workshop user. Execute the following command in the VS Code terminal:
 
 [source,sh,role="copypaste",subs="attributes"]
 ----
-oc login -u {{ USER_ID }} -p {{ OPENSHIFT_USER_PASSWORD }} https://openshift.default.svc:443
+oc login -u {USER_ID} -p {USER_PASSWORD} https://openshift.default.svc:443
 ----
 
 You should see:
@@ -266,8 +163,8 @@ Login successful.
 
 You have access to the following projects and can switch between them with 'oc project <projectname>':
 
-  * {{ USER_ID }}-devspaces
-    {{ USER_ID }}-project
+  * {USER_ID}-devspaces
+    {USER_ID}-project
 
 Using project "user1-devspaces".
 Welcome! See 'oc help' to get started.
@@ -281,16 +178,16 @@ Deploy the `people` microservice by executing the following shell script in a Co
 
 [source, shell, role="copypaste",subs="attributes"]
 ----
-sh scripts/deploy-people.sh {{ USER_ID }}
+sh scripts/deploy-people.sh {USER_ID}
 ----
 
 Wait for the script to complete before continuing.
 
-When the script completes, the app is deployed to OpenShift. You can see it in the {{ CONSOLE_URL}}[OpenShift Console^]. Login with your assigned username and password (e.g. `{{ USER_ID }}/{{ OPENSHIFT_USER_PASSWORD }}`):
+When the script completes, the app is deployed to OpenShift. You can see it in the https://console-openshift-console.{ROUTE_SUBDOMAIN}[OpenShift Console^]. Login with your assigned username and password (e.g. `{USER_ID}/{USER_PASSWORD}`):
 
 image::che-login.png[login,700]
 
-Once logged in, select the name of your project (`{{ USER_ID }}-project`):
+Once logged in, select the name of your project (`{USER_ID}-project`):
 
 image::ocpproj.png[project,700]
 
@@ -308,7 +205,7 @@ You have to restore the following configuration to `application.properties` in t
 
 [source, properties,role="copypaste",subs="attributes"]
 ----
-%dev.quarkus.dev-ui.hosts={{ USER_ID }}-quarkus-workshop-index-webpage.{{ ROUTE_SUBDOMAIN }}
+%dev.quarkus.dev-ui.hosts={USER_ID}-quarkus-workshop-index-webpage.{ROUTE_SUBDOMAIN}
 ----
 ====
 

@@ -10,7 +10,7 @@ Although your VS Code is running on the Kubernetes cluster, it's running with a 
 
 [source,sh,role="copypaste",subs="attributes"]
 ----
-oc login -u {USER_ID} -p {OPENSHIFT_USER_PASSWORD} https://openshift.default.svc:443
+oc login -u {USER_ID} -p {USER_PASSWORD} https://openshift.default.svc:443
 ----
 
 You should see:
@@ -127,7 +127,7 @@ hello quarkus-on-openshift
 Your hostname (the Kubernetes _pod_ in which your app runs) name will be different from the above.
 ====
 
-Now that your app is deployed to OpenShift you can also see it in the {CONSOLE_URL}[OpenShift Console^]. Login with `{USER_ID}/{OPENSHIFT_USER_PASSWORD}`
+Now that your app is deployed to OpenShift you can also see it in the https://console-openshift-console.{ROUTE_SUBDOMAIN}[OpenShift Console^]. Login with `{USER_ID}/{USER_PASSWORD}`
 
 image::che-login.png[login,700]
 

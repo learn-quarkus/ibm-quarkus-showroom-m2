@@ -17,13 +17,8 @@ asciidoc:
     ssh_command: ssh someone@example.com
     ROUTE_SUBDOMAIN: example.com
     MASTER_URL: api.example.com
-    CONSOLE_URL: https://console-openshift-console.example.com
-    DS_URL: https://devspaces-openshift-devspaces.example.com
-    USER_ID: kubeadmin
-    DS_USER_NAME: kubeadmin
-    DS_USER_PASSWORD: quarkus
-    OPENSHIFT_USER_NAME: kubeadmin
-    OPENSHIFT_USER_PASSWORD: quarkus
+    USER_ID: "%USER_ID%"
+    USER_PASSWORD: quarkus
     page-links:
     - url: https://ibm.com
       text: IBM
