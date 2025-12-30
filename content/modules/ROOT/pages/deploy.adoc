@@ -21,7 +21,7 @@ Login successful.
 
 You have access to 89 projects, the list has been suppressed. You can list all projects with 'oc projects'
 
-Using project "devspaces-kube-admin-qyf6iq".
+Using project "devspaces-{USER_ID}-qyf6iq".
 Welcome! See 'oc help' to get started.
 ----
 
